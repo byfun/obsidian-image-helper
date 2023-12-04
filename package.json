@@ -1,7 +1,7 @@
 {
 	"name": "obsidian-image-helper",
-	"version": "1.0.1",
-	"description": "This plugin provides a context menu to change image format in live mode",
+	"version": "1.0.0",
+	"description": "Image helper to convert a image to another format in reading view in Obsidian.md",
 	"main": "main.js",
 	"scripts": {
 		"dev": "node esbuild.config.mjs",

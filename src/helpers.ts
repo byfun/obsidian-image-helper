@@ -2,6 +2,7 @@ import { TFile, Notice, requestUrl } from "obsidian";
 
 const DEBUG_MODE = false;
 const LOAD_IMAGE_BLOB_TIMEOUT = 5000;
+const NOTICE_TIMEOUT_INF = 500000;
 const NOTICE_TIMEOUT = 1800;
 
 export function dbg(...args: any[]) {
@@ -30,7 +31,7 @@ export async function convertImage(
 		return;
 	}
 	const originExtension = getExtension(src);
-	const notice = new Notice("Converting image...", NOTICE_TIMEOUT);
+	const notice = new Notice("Converting image...", NOTICE_TIMEOUT_INF);
 	try {
 		const blob = await loadImageBlob(src);
 		let arrayBuffer: ArrayBuffer = await doConvertImage(
@@ -48,7 +49,6 @@ export async function convertImage(
 				"." + originExtension,
 				"." + extension
 			);
-
 			try {
 				dbg(
 					"convertImage() calls renameFile(): ",
@@ -69,7 +69,7 @@ export async function convertImage(
 			notice.hide();
 		}
 		console.log("Error, could not change the image!", e);
-		new Notice(e.message, NOTICE_TIMEOUT);
+		new Notice(e, NOTICE_TIMEOUT);
 		new Notice("Error, could not change the image!", NOTICE_TIMEOUT);
 	}
 }
@@ -109,8 +109,16 @@ export function getFileByName(imgURL: string): TFile | null {
 }
 
 export function getBasename(fullpath: string): string {
-	let fileBaseName = fullpath.substring(fullpath.lastIndexOf("/") + 1);
-	return fileBaseName.substring(0, fileBaseName.indexOf("?"));
+	let fileBaseName = fullpath;
+	if (fileBaseName.indexOf("/") >= 0) {
+		fileBaseName = fileBaseName.substring(
+			fileBaseName.lastIndexOf("/") + 1
+		);
+	}
+	if (fileBaseName.indexOf("?") > 0) {
+		fileBaseName = fileBaseName.substring(0, fileBaseName.indexOf("?"));
+	}
+	return fileBaseName;
 }
 
 /**
@@ -121,8 +129,15 @@ export function getBasename(fullpath: string): string {
  */
 export function getExtension(fullpath: string): string {
 	let filename = getBasename(fullpath);
-	filename = filename.substring(0, filename.indexOf("?"));
-	return filename.substring(filename.lastIndexOf(".") + 1).toLowerCase();
+	if (filename.indexOf("?") > 0) {
+		filename = filename.substring(0, filename.indexOf("?"));
+	}
+	if (filename.indexOf(".") > 0) {
+		filename = filename
+			.substring(filename.lastIndexOf(".") + 1)
+			.toLowerCase();
+	}
+	return filename;
 }
 
 /**
@@ -236,7 +251,7 @@ async function loadImageBlob(imgSrc: string): Promise<Blob> {
 			};
 			image.onerror = async () => {
 				try {
-					await requestUrl({url : image.src });
+					await requestUrl({ url: image.src });
 					const blob = await loadImageBlob(
 						`https://api.allorigins.win/raw?url=${encodeURIComponent(
 							imgSrc

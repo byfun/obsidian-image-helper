@@ -13,11 +13,6 @@ when you right click on the image in reading view of [Obsidian](https://obsidian
 
 ![](images/contextmenu.jpg)
 
-## Known Issues
-- It cannot convert big size image, because this plugin uses canvas. Maximum size of a `canvas` depends on web browser.
-
-![](images/maximum-canvas-size.jpg)
-
 ## Installation
 You can install this plugin in the Community Plugins tab of the [Obsidian](https://obsidian.md/).
 Just search for "Image Convert" or goto this plugin page : [Link](https://obsidian.md/plugins?id=image-helper)

@@ -8,7 +8,7 @@ interface Listener {
 	(this: Document, ev: Event): any;
 }
 
-interface ImageContextmenuSettings {
+interface ImageHelperSettings {
 	quality: string;
 	offset_x: string;
 	offset_y: string;
@@ -17,8 +17,8 @@ interface ImageContextmenuSettings {
 	use_png: boolean;
 }
 
-const DEFAULT_SETTINGS: ImageContextmenuSettings = {
-	quality: "0.6",
+const DEFAULT_SETTINGS: ImageHelperSettings = {
+	quality: "0.8",
 	offset_x: "0",
 	offset_y: "0",
 	use_jpg: true,
@@ -26,9 +26,9 @@ const DEFAULT_SETTINGS: ImageContextmenuSettings = {
 	use_png: false,
 };
 
-export default class ImageContextmenu extends Plugin {
+export default class ImageHelper extends Plugin {
 	longTapTimeoutId: number | null = null;
-	settings: ImageContextmenuSettings;
+	settings: ImageHelperSettings;
 
 	async onload() {
 		await this.loadSettings();
