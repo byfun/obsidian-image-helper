@@ -15,7 +15,7 @@ when you right click on the image in reading view of [Obsidian](https://obsidian
 
 ## Installation
 You can install this plugin in the Community Plugins tab of the [Obsidian](https://obsidian.md/).
-Just search for "Image Convert" or goto this plugin page : [Link](https://obsidian.md/plugins?id=image-helper)
+Just search for "Image Helper" or goto this plugin page : [Link](https://obsidian.md/plugins?id=image-helper)
 
 ## Credits
 This plugin uses some functions from the other plugin:
