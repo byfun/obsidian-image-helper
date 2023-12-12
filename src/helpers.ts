@@ -1,4 +1,4 @@
-import { TFile, Notice, requestUrl } from "obsidian";
+import { TFile, Notice } from "obsidian";
 
 const DEBUG_MODE = false;
 const LOAD_IMAGE_BLOB_TIMEOUT = 5000;
@@ -249,18 +249,8 @@ async function loadImageBlob(imgSrc: string): Promise<Blob> {
 					resolve(blob);
 				});
 			};
-			image.onerror = async () => {
-				try {
-					await requestUrl({ url: image.src });
-					const blob = await loadImageBlob(
-						`https://api.allorigins.win/raw?url=${encodeURIComponent(
-							imgSrc
-						)}`
-					);
-					resolve(blob);
-				} catch {
-					reject();
-				}
+			image.onerror = () => {
+				reject();
 			};
 			image.src = imgSrc;
 		});
