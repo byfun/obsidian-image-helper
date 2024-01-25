@@ -81,7 +81,7 @@ export async function convertImage(
  * @returns TFile object from image url (internal link)
  */
 export function getFileByName(imgURL: string): TFile | null {
-	const fileBaseName = getBasename(imgURL);
+	const fileBaseName = getBasename(decodeURIComponent(imgURL));
 	if (fileBaseName == null || fileBaseName == "") {
 		dbg("getFileByName() cannot get file basename");
 		return null;
